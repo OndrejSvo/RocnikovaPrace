@@ -1,0 +1,10 @@
+body{
+    background-image: url('../img/brick.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+.obal {
+    display: flex;
+  }

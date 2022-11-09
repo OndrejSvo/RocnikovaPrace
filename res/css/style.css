@@ -1,0 +1,27 @@
+body{
+    background-image: url('../img/pozadi.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+#menu{
+    display: flex;
+    border: 15px solid black;
+    margin-left: 33em;
+    margin-top: 15em;
+    width: 500px;
+    height: 300px;
+}
+a{
+ color: white;
+ text-decoration: none;  
+ display: flex;
+ position: fixed;
+ font-size: 40px;
+ width: fit-content;
+ height: fit-content;
+ padding-left: 185px; 
+ padding-top: 140px;
+}
