@@ -7,14 +7,12 @@ body{
 }
 
 #menu{
-    display: flex;
-    border: 15px solid black;
-    margin-left: 33em;
-    margin-top: 15em;
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    margin-top: 10%;
+    border: 5px solid black;
 }
 a{
+ background-attachment: fixed;
  color: white;
  text-decoration: none;  
  display: flex;
