@@ -1,0 +1,31 @@
+body{
+    background-image: url('../img/brick.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    user-select: none;
+}
+
+.obal{
+    margin-top: 8%;
+    width: 100%;
+}
+.text{
+    color: white;
+    font-size: 50px;
+    width: fit-content;
+    height: fit-content;
+    padding-top: 100px;
+    margin: 0 auto;
+   }
+.vyber{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+
+
+    
