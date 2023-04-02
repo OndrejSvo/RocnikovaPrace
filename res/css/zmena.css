@@ -7,7 +7,7 @@ body{
     user-select: none;
 }
 
-.obal{
+.obal{  /*text & mapy*/
     margin-top: 8%;
     width: 100%;
 }
@@ -18,8 +18,8 @@ body{
     height: fit-content;
     padding-top: 100px;
     margin: 0 auto;
-   }
-.vyber{
+   }  
+.vyber{ /*mapy*/
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;

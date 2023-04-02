@@ -15,17 +15,17 @@
       justify-content: center;
       position: relative; 
   }
-  .cele{
+  .cele{  /*hp bar & canvas*/
    position: relative;
   }
-  .HP{
+  .HP{  /*hp bar*/
       position: absolute;
       display: flex;
       width: 100%;
       align-items: center;
       padding: 20px;
   }
-  .casovac{
+  .casovac{ /*čas*/
     background-color: black;
       width: 100px;
       height: 100px;
