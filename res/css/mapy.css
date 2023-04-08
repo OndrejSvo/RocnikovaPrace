@@ -36,6 +36,18 @@
       justify-content: center;
       color: white;
   }
+  #text{
+    color: white;
+    font-size: 40;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
   canvas {
     object-fit: contain;
     max-width: 100%;

@@ -18,6 +18,29 @@ class Background {
 }
 const background=new Background();
 
+//čas hry
+let timer=60;
+function gameTime(){   
+    if(timer>0){
+        timer--;
+        setTimeout(gameTime, 1000);  
+        document.querySelector('#timer').innerHTML=timer;
+    }
+    //hra rozhodne podle HP kdo vyhrál
+    if(timer===0){
+        if(blue.health===red.health){
+            document.querySelector('#text').innerHTML='TIE';    
+        }
+        else if(blue.health>red.health){
+            document.querySelector('#text').innerHTML='BLUE WIN';
+        }
+        else {
+            document.querySelector('#text').innerHTML='RED WIN';
+        }
+    }
+}
+gameTime();
+
 const gravity = 0.7
 class Player{
     constructor({position,velocity,color,swordSide}){
@@ -33,7 +56,7 @@ class Player{
                 x: this.position.x,
                 y: this.position.y
             },
-            swordSide:swordSide,
+            swordSide,
             width:100,
             height:50,
         }
@@ -96,7 +119,7 @@ const red = new Player({
         y:0
     },
     swordSide:{
-        x: 50,
+        x: 0,
         y: 0
     },
     color: 'red',
@@ -155,6 +178,11 @@ function animate(){ //nekonečný loop
             blue.attacking=false;
             red.health -= 5;
             document.querySelector('#RedHealth').style.width = red.health + '%';
+        if(red.health==0){
+            document.querySelector('#text').innerHTML='BLUE WIN';
+            red.height=50
+            red.width=150
+        }
     }
     if(red.sword.position.x+red.sword.width>=blue.position.x    &&
         red.sword.position.x<=blue.position.x+blue.width        &&
@@ -164,6 +192,11 @@ function animate(){ //nekonečný loop
             red.attacking=false;
             blue.health -= 5;
             document.querySelector('#BlueHealth').style.width = blue.health + '%';
+            if(blue.health==0){
+                document.querySelector('#text').innerHTML='RED WIN'; 
+                blue.height=50
+                blue.width=150
+            }
     }
 }
 
@@ -174,10 +207,12 @@ window.addEventListener('keydown',(event)=>{ //pohyb hráčů
         case 'd':
             keys.d.down=true
             blueLastKey='d'
+            blue.sword.swordSide.x=0;
             break;
         case 'a':
             keys.a.down=true
             blueLastKey='a'
+            blue.sword.swordSide.x=50;
             break;
         case 'w':
             blue.velocity.y=-14
@@ -189,10 +224,12 @@ window.addEventListener('keydown',(event)=>{ //pohyb hráčů
         case 'ArrowRight':
             keys.ArrowRight.down=true
             redLastKey='ArrowRight'
+            red.sword.swordSide.x=0;
             break;
         case 'ArrowLeft':
             keys.ArrowLeft.down=true
             redLastKey='ArrowLeft'
+            red.sword.swordSide.x=50;
             break;
         case 'ArrowUp':
             red.velocity.y=-14
