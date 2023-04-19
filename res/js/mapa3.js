@@ -29,28 +29,32 @@ function gameTime(){
     //hra rozhodne podle HP kdo vyhrál
     if(timer===0){
         if(blue.health===red.health){
-            document.querySelector('#text').innerHTML='TIE';    
+            document.querySelector('#text').innerHTML='DRAW';    
         }
         else if(blue.health>red.health){
-            document.querySelector('#text').innerHTML='BLUE WIN';
+            document.querySelector('#text').innerHTML='BLUE WON';
         }
         else {
-            document.querySelector('#text').innerHTML='RED WIN';
+            document.querySelector('#text').innerHTML='RED WON';
         }
     }
 }
 gameTime();
 
+
 const gravity = 0.7
 class Player{
-    constructor({position,velocity,color,swordSide}){
+    constructor({position,velocity,color,swordSide,path,swordPath}){
         this.position = position
         this.velocity = velocity
-        this.height = 150   //výška hráče
-        this.width = 50     //šířka hráče
+        this.height = 226  //výška hráče
+        this.width = 126     //šířka hráče
         this.health = 100;  //životy hráče
         this.color = color;
         this.attacking
+        this.img = new Image();
+        this.path = path;
+        this.img.src = this.path;
         this.sword={
             position:{
                 x: this.position.x,
@@ -60,15 +64,21 @@ class Player{
             width:100,
             height:50,
         }
+        
+        this.swordImg = new Image();
+        this.swordPath= swordPath;
+        this.swordImg.src = this.swordPath;        
     }
     draw(){
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        //ctx.fillStyle = this.color;
+        //ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        ctx.drawImage(this.img, this.position.x, this.position.y, this.width, this.height);
 
         //meč
         if(this.attacking){
-            ctx.fillStyle = 'silver';
-            ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+            //ctx.fillStyle = 'silver';
+            //ctx.fillRect(this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)
+            ctx.drawImage(this.swordImg,this.sword.position.x, this.sword.position.y, this.sword.width, this.sword.height)    
         }
         
     }
@@ -89,9 +99,10 @@ class Player{
         this.attacking=true
         setTimeout(()=>{
         this.attacking=false
-        }, 100)
+        }, 500)
     }
 }
+
 
 const blue = new Player({
     position:{
@@ -103,15 +114,17 @@ const blue = new Player({
         y:0
     },
     swordSide:{
-        x: 0,
+        x: 76,
         y: 0
     },
     color: 'blue',
+    path:"./res/img/modra.png",
+    swordPath:"./res/img/swordR.png"
 })
 
 const red = new Player({
     position:{
-        x:canvas.width-50,
+        x:canvas.width-126,
         y:350
     },
     velocity:{
@@ -123,6 +136,8 @@ const red = new Player({
         y: 0
     },
     color: 'red',
+    path:"./res/img/cervena.png",
+    swordPath:"./res/img/swordL.png"
 })
 
 console.log(blue)
@@ -159,6 +174,23 @@ function animate(){ //nekonečný loop
     else if(keys.a.down&&blueLastKey==='a'){
         blue.velocity.x=-4;
     }
+    else if(keys.d.down&&blueLastKey==='D'){
+        blue.velocity.x=4;
+    }
+    else if(keys.a.down&&blueLastKey==='A'){
+        blue.velocity.x=-4;
+    }
+
+    //modrý nemůže mimo mapu
+    if(blue.position.x<0){
+        blue.position.x=0
+    }
+    if(blue.position.x>canvas.width-blue.width){
+        blue.position.x=canvas.width-blue.width
+    }
+    if(blue.position.y<=0){
+        blue.position.y=0;
+    }
 
     //pohyb červeného
     red.velocity.x=0;
@@ -167,6 +199,17 @@ function animate(){ //nekonečný loop
     }
     else if(keys.ArrowLeft.down && redLastKey==='ArrowLeft'){
         red.velocity.x=-4;
+    }
+
+    //červený nemůže mimo mapu
+    if(red.position.x<0){
+        red.position.x=0
+    }
+    if(red.position.x>canvas.width-red.width){
+        red.position.x=canvas.width-red.width
+    }
+    if(red.position.y<=0){
+        red.position.y=0;
     }
 
     //zjištění zásahu
@@ -179,9 +222,7 @@ function animate(){ //nekonečný loop
             red.health -= 5;
             document.querySelector('#RedHealth').style.width = red.health + '%';
         if(red.health==0){
-            document.querySelector('#text').innerHTML='BLUE WIN';
-            red.height=50
-            red.width=150
+            document.querySelector('#text').innerHTML='BLUE WON';
         }
     }
     if(red.sword.position.x+red.sword.width>=blue.position.x    &&
@@ -193,9 +234,7 @@ function animate(){ //nekonečný loop
             blue.health -= 5;
             document.querySelector('#BlueHealth').style.width = blue.health + '%';
             if(blue.health==0){
-                document.querySelector('#text').innerHTML='RED WIN'; 
-                blue.height=50
-                blue.width=150
+                document.querySelector('#text').innerHTML='RED WON';      
             }
     }
 }
@@ -203,11 +242,13 @@ function animate(){ //nekonečný loop
 animate()
 
 window.addEventListener('keydown',(event)=>{ //pohyb hráčů
+    console.log(event.key)
     switch(event.key){
+        //klávesy modrého
         case 'd':
             keys.d.down=true
             blueLastKey='d'
-            blue.sword.swordSide.x=0;
+            blue.sword.swordSide.x=-76;
             break;
         case 'a':
             keys.a.down=true
@@ -220,11 +261,29 @@ window.addEventListener('keydown',(event)=>{ //pohyb hráčů
         case 's':
             blue.attack();
             break;
+        //klávesy modrého(caps lock)
+        case 'D':
+            keys.d.down=true
+            blueLastKey='D'
+            blue.sword.swordSide.x=-76;
+            break;
+        case 'A':
+            keys.a.down=true
+            blueLastKey='A'
+            blue.sword.swordSide.x=50;
+            break;
+        case 'W':
+            blue.velocity.y=-14
+            break;
+        case 'S':
+            blue.attack();
+            break;
 
+        //klávesy červeného
         case 'ArrowRight':
             keys.ArrowRight.down=true
             redLastKey='ArrowRight'
-            red.sword.swordSide.x=0;
+            red.sword.swordSide.x=-76;
             break;
         case 'ArrowLeft':
             keys.ArrowLeft.down=true
@@ -248,8 +307,12 @@ window.addEventListener('keyup',(event)=>{ //vynulovani pohybu
         case 'a':
             keys.a.down=false
             break;
-        case 'w':
-            keys.w.down=false
+
+        case 'D':
+            keys.d.down=false
+            break;
+        case 'A':
+            keys.a.down=false
             break;
 
         case 'ArrowRight':
@@ -257,9 +320,6 @@ window.addEventListener('keyup',(event)=>{ //vynulovani pohybu
             break;
         case 'ArrowLeft':
             keys.ArrowLeft.down=false
-            break;
-        case 'ArrowUp':
-            keys.ArrowUp.down=false
             break;
     }
 })

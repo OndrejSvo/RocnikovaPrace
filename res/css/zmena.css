@@ -11,21 +11,32 @@ body{
     margin-top: 8%;
     width: 100%;
 }
+a{
+    text-decoration: none;
+}
 .text{
     color: white;
     font-size: 50px;
     width: fit-content;
     height: fit-content;
-    padding-top: 100px;
+    padding-top: 75px;
+    padding-bottom: 15px;
     margin: 0 auto;
-   }  
+   } 
+   h3{
+    color:white;
+    font-size: 30px;
+    top: 45%;
+    width:400px;
+    text-align: center;
+} 
 .vyber{ /*mapy*/
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-evenly;
 }
-
-
-
+img:hover{
+    border: 2px solid orange;
+}
     
