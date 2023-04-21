@@ -243,6 +243,7 @@ animate()
 
 window.addEventListener('keydown',(event)=>{ //pohyb hráčů
     console.log(event.key)
+if((blue.health>0)&&(timer>0)&&(red.health>0)){
     switch(event.key){
         //klávesy modrého
         case 'd':
@@ -297,6 +298,115 @@ window.addEventListener('keydown',(event)=>{ //pohyb hráčů
             red.attack();
             break;
     }
+}
+//červený vyhrál
+if((blue.health<=0)&&(timer>0)&&(red.health>0)){
+    switch(event.key){
+        case 'ArrowRight':
+            keys.ArrowRight.down=true
+            redLastKey='ArrowRight'
+            red.sword.swordSide.x=-76;
+            break;
+        case 'ArrowLeft':
+            keys.ArrowLeft.down=true
+            redLastKey='ArrowLeft'
+            red.sword.swordSide.x=50;
+            break;
+        case 'ArrowUp':
+            red.velocity.y=-14
+            break;
+        case 'ArrowDown':
+            red.attack();
+            break;
+    }
+}
+//modrý vyhrál
+if((blue.health>0)&&(timer>0)&&(red.health<=0)){
+    switch(event.key){
+        //klávesy modrého
+        case 'd':
+            keys.d.down=true
+            blueLastKey='d'
+            blue.sword.swordSide.x=-76;
+            break;
+        case 'a':
+            keys.a.down=true
+            blueLastKey='a'
+            blue.sword.swordSide.x=50;
+            break;
+        case 'w':
+            blue.velocity.y=-14
+            break;
+        case 's':
+            blue.attack();
+            break;
+        //klávesy modrého(caps lock)
+        case 'D':
+            keys.d.down=true
+            blueLastKey='D'
+            blue.sword.swordSide.x=-76;
+            break;
+        case 'A':
+            keys.a.down=true
+            blueLastKey='A'
+            blue.sword.swordSide.x=50;
+            break;
+        case 'W':
+            blue.velocity.y=-14
+            break;
+        case 'S':
+            blue.attack();
+            break;
+    }
+}
+//čas vypršel
+if((blue.health>0)&&(timer<=0)&&(red.health>0)){
+    switch(event.key){
+        //klávesy modrého
+        case 'd':
+            keys.d.down=true
+            blueLastKey='d'
+            blue.sword.swordSide.x=-76;
+            break;
+        case 'a':
+            keys.a.down=true
+            blueLastKey='a'
+            blue.sword.swordSide.x=50;
+            break;
+        case 'w':
+            blue.velocity.y=-14
+            break;
+        //klávesy modrého(caps lock)
+        case 'D':
+            keys.d.down=true
+            blueLastKey='D'
+            blue.sword.swordSide.x=-76;
+            break;
+        case 'A':
+            keys.a.down=true
+            blueLastKey='A'
+            blue.sword.swordSide.x=50;
+            break;
+        case 'W':
+            blue.velocity.y=-14
+            break;
+
+        //klávesy červeného
+        case 'ArrowRight':
+            keys.ArrowRight.down=true
+            redLastKey='ArrowRight'
+            red.sword.swordSide.x=-76;
+            break;
+        case 'ArrowLeft':
+            keys.ArrowLeft.down=true
+            redLastKey='ArrowLeft'
+            red.sword.swordSide.x=50;
+            break;
+        case 'ArrowUp':
+            red.velocity.y=-14
+            break;
+    }
+}
 })
 
 window.addEventListener('keyup',(event)=>{ //vynulovani pohybu
